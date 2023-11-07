@@ -22,6 +22,7 @@ services:
       ##$(cat .secret | xargs)
       ##/run/secrets/db_uri  'mysql+pymysql://root:example@db/flask'
       SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}'
+    restart: always
 
 
   db:
@@ -32,12 +33,14 @@ services:
       - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
     ##flask
       - MARIADB_DATABASE=${DB_NAME}
+    restart: always
 
   adminer:
     image: adminer
 ##     restart: always
     ports:
       - 5000:5000
+    restart: always
 
   nginx:
     image: webapp-nginx
@@ -55,5 +58,6 @@ services:
     cpus: "0.5"
     mem_reservation: "10M"
     mem_limit: "250M"
+    restart: always
 volumes:
   static_volume:
